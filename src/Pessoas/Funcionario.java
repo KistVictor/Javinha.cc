@@ -1,14 +1,12 @@
 package Pessoas;
 
 public class Funcionario extends Pessoa{
-    String nome;
-    int cpf;
-    String funcao;
-    int _salario;
+    public String funcao;
+    public int _salario;
 
     public Funcionario(String nome, int cpf, String funcao){
         super(nome, cpf);
-        this._funcao = funcao;
+        this.funcao = funcao;
     }
 
     public int salario() { //get
