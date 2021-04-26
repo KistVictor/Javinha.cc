@@ -11,5 +11,4 @@ public class Funcionario extends Pessoa{
         this._salario = salario;
         this._funcao = funcao;
     }
-    
 }

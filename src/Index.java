@@ -14,7 +14,6 @@ public class Index {
         //System.out.println(num1 + " " + num2);
         float media = x.media(y._numero);
 
-
-
+        
     }
 }

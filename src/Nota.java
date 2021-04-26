@@ -5,8 +5,12 @@ public class Nota {
         this._numero = numero;
     }
 
-    public float media(float y) {
+    public float media(float[] notas) {
         //System.out.println(this._numero + " " + y);
-        return (this._numero + y) / 2;
+        float soma;
+        for (int i = 0; i < 3; i++)
+            soma += notas[i];
+        float media = soma/3;
+        return media;
     }
 }
