@@ -7,7 +7,7 @@ public class Nota {
 
     public float media(float[] notas) {
         //System.out.println(this._numero + " " + y);
-        float soma;
+        float soma = 0;
         for (int i = 0; i < 3; i++)
             soma += notas[i];
         float media = soma/3;

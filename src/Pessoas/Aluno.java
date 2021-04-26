@@ -5,7 +5,7 @@ public class Aluno extends Pessoa{
     int _cpf;
     int _ano;
     float[] _notas;
-    int _media;
+    float _media;
 
     public Aluno(String nome, int cpf, int ano, float[]notas){
         super(nome, cpf);
@@ -16,5 +16,4 @@ public class Aluno extends Pessoa{
     public float finalizarAno() {
         this._media = Nota.media(_notas);
     }
-
 }
