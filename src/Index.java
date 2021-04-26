@@ -3,8 +3,6 @@ import Pessoas.Aluno;
 import Pessoas.Funcionario;
 
 public class Index {
-    public Index() {
-    }
 
     public static void main(String[] args) {
         DecimalFormat f = new DecimalFormat("##.00");
