@@ -1,19 +1,26 @@
 package Pessoas;
 
 public class Aluno extends Pessoa{
-    String _nome;
-    int _cpf;
-    int _ano;
-    float[] _notas;
+    String nome;
+    int cpf;
+    int ano;
     float _media;
 
-    public Aluno(String nome, int cpf, int ano, float[]notas){
+    public Aluno(String nome, int cpf, int ano){
         super(nome, cpf);
-        this._notas = notas;
-        this._ano = ano;
+        this.ano = ano;
     }
 
-    public float finalizarAno() {
-        this._media = Nota.media(_notas);
+    public float media() {
+        return _media;
+    }
+
+    public String nome() {
+        return nome;
+    }
+
+    public void finalizarAno(float nota1, float nota2, float nota3) {
+        float media = (nota1+nota2+nota3) / 3;
+        _media = media;
     }
 }
