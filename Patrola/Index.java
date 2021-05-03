@@ -1,11 +1,11 @@
 import java.text.DecimalFormat;
 import java.util.Scanner;
 
-public class Index {
+public class Index{
 
     public static void main(String[] args) {
 
-        System.out.println("Digite quantos carros deseja adicionar: ");
+        /*System.out.println("Digite quantos carros deseja adicionar: ");
         Scanner scan = new Scanner(System.in);
         int tamanho = scan.nextInt();
         Carro[] vet;
@@ -21,6 +21,6 @@ public class Index {
 
             System.out.println("Digite a cor do carro: ");
             String tempCor = scan.next();
-        }
+        }*/
     }
 }
