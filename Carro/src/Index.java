@@ -19,13 +19,15 @@ public class Index {
             int tempAno = scan.nextInt();
 
             System.out.println("Digite a cor do carro: ");
-            String tempCor = scan.next();*/
+            String tempCor = scan.next();
+            
+            vet[i] = new carro(tempModelo, tempAno, tempCor)*/
 
             System.out.println("Digite o modelo do carro: ");
             vet[i].modelo = scan.next();
 
             System.out.println("Digite o ano do carro: ");
-            vet[i].ano = scan.nextInt();
+            vet[i].ano = scan.next();
 
             System.out.println("Digite a cor do carro: ");
             vet[i].cor = scan.next();
