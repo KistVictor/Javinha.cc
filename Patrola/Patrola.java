@@ -1,16 +1,12 @@
-
-
 public class Patrola {
     private String cor;
     private String marca;
-    private Boolean ligado;
-    private int marcha;
+    private Boolean ligado = false;
+    private int marcha = 0;
 
-    public Patrola(String cor, String marca, Float altura, Boolean ligado) {
+    public Patrola(String cor, String marca) {
         this.cor = cor;
         this.marca = marca;
-        this.ligado = ligado;
-        this.marcha = 0;
     }
 
     public void mostrarCaracteristicas() {
@@ -20,35 +16,48 @@ public class Patrola {
         System.out.println(this.marcha);
     }
 
-    
-    public void alternarMotor() {
-        ligado = !ligado;
-        String motor = ligado ? "ligado!" : "desligado!";
-        System.out.println("O motor está " + motor);
-    }
-    
-    public String getCor() {
-        return cor;
+    public void ligar() {
+        if (this.ligado == false) {
+            this.ligado = true;
+            Systen.out.println("Motor liga");
+        } else {
+            Systen.out.println("Nada acontece");
+        }
     }
 
-    public void setCor(String cor) {
-        this.cor = cor;
+    public void andar() {
+        if (this.ligado == true)
+            this.marcha = 1;
+        else
+            Systen.out.println("Nada acontece");
     }
 
-    public String getMarca() {
-        return marca;
+    public void reduzirMarcha() {
+        if (this.marcha != 1 && this.ligado == true && this.marcha != 0) {
+            this.marcha = this.marcha - 1;
+            Systen.out.println("Marcha: " + this.marcha);
+        } else {
+            Systen.out.println("Nada acontece");
+        }
     }
 
-    public void setMarca(String marca) {
-        this.marca = marca;
+    public void subirMarcha() {
+        if (this.marcha != 3 && this.ligado == true && this.marcha != 0) {
+            this.marcha = this.marcha + 1;
+            Systen.out.println("Marcha: " + this.marcha);
+        } else {
+            Systen.out.println("Nada acontece");
+        }
     }
 
-    public Boolean getLigado() {
-        return ligado;
-    }
-
-    public void setLigado(Boolean ligado) {
-        this.ligado = ligado;
+    public void desligar() {
+        if (this.ligado == true) {
+            this.ligado = false;
+            this.marcha = 0;
+            Systen.out.println("Motor desliga");
+        } else {
+            Systen.out.println("Nada acontece");
+        }
     }
     
 }
