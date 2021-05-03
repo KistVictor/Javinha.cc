@@ -1,15 +1,15 @@
-import Pessoas.Motorista;
-import Pessoas.Passageiro;
-
 public class Carro {
-    public Passageiro passageiro;
-    public Motorista motorista;
-    public int valor;
+    public String modelo;
+    public String ano;
+    public String cor;
 
-    public Carro(Motorista motorista, Passageiro passageiro) {
-        this.passageiro = passageiro;
-        this.motorista = motorista;
-    }
+    /*public Carro(String modelo, String ano, String cor) {
+        this.modelo = modelo;
+        this.ano = ano;
+        this.cor = cor;
+    }*/
+
+
 
     
 }
