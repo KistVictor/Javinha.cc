@@ -1,4 +1,3 @@
-import java.text.DecimalFormat;
 import java.util.Scanner;
 
 public class Index {
@@ -13,14 +12,25 @@ public class Index {
 
         for (int i = 0; i < vet.length; i++) {
 
-            System.out.println("Digite o modelo do carro: ");
+            /*System.out.println("Digite o modelo do carro: ");
             String tempModelo = scan.next();
 
             System.out.println("Digite o ano do carro: ");
             int tempAno = scan.nextInt();
 
             System.out.println("Digite a cor do carro: ");
-            String tempCor = scan.next();
+            String tempCor = scan.next();*/
+
+            System.out.println("Digite o modelo do carro: ");
+            vet[i].modelo = scan.next();
+
+            System.out.println("Digite o ano do carro: ");
+            vet[i].ano = scan.nextInt();
+
+            System.out.println("Digite a cor do carro: ");
+            vet[i].cor = scan.next();
+
+            vet[i].mostrarCaracteristicas();
         }
     }
 }
