@@ -1,4 +1,4 @@
-package src;
+
 
 public class Patrola {
     private String cor;
@@ -12,6 +12,14 @@ public class Patrola {
         this.ligado = ligado;
         this.marcha = 0;
     }
+
+    public void mostrarCaracteristicas() {
+        System.out.println(this.cor);
+        System.out.println(this.marca);
+        System.out.println(this.ligado);
+        System.out.println(this.marcha);
+    }
+
     
     public void alternarMotor() {
         ligado = !ligado;
