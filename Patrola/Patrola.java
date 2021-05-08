@@ -1,12 +1,14 @@
 public class Patrola {
     private String cor;
     private String marca;
-    private Boolean ligado = false;
-    private int marcha = 0;
+    private Boolean ligado;
+    private int marcha;
 
     public Patrola(String cor, String marca) {
         this.cor = cor;
         this.marca = marca;
+        this.ligado = false;
+        this.marcha = 0;
     }
 
     public void mostrarCaracteristicas() {
