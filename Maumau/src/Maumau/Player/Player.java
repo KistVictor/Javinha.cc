@@ -23,6 +23,14 @@ public class Player {
         hand.add(card);
     }
 
+    public String printCards() {
+        String cards = "";
+        for (Integer i = 0; i < hand.size(); i++) {
+            cards += "[" + String.valueOf(i) + "]" + hand.get(i).toString() + " ";
+        }
+        return cards;
+    }
+
     public List<Card> getHand() {
         return hand;
     }
