@@ -4,19 +4,18 @@ import java.util.Scanner;
 
 import Maumau.Cards.Card;
 import Maumau.Cards.Deck;
+import Maumau.Game.Game;
 
 public class Maumau {
     public static void main(String[] args) {
-        Deck deck = new Deck();
-        for(Card card: deck.getDeck()) {
-            System.out.println(card.toString());
-        }
 
-        deck.shuffle();
-        
-        System.out.println("\n\n");
-        for(Card card: deck.getDeck()) {
-            System.out.println(card.toString());
-        }
+
+//        Scanner scanner = new Scanner(System.in);
+//        Integer numberPlayer = scanner.nextInt();
+
+        Game game = new Game();
+        game.startGame();
+        game.dealCards();
+        game.Play();
     }
 }

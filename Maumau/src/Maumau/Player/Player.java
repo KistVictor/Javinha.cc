@@ -1,0 +1,43 @@
+package Maumau.Player;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import Maumau.Cards.Card;
+
+public class Player {
+    
+    private List<Card> hand;
+    private String nome;
+
+    public Player() {    
+        this.hand = new ArrayList<>();
+    }
+
+    public Player(String nome) {
+        this.hand = new ArrayList<>();
+        this.nome = nome;
+    }
+
+    public void addCard(Card card) {
+        hand.add(card);
+    }
+
+    public List<Card> getHand() {
+        return hand;
+    }
+
+    public void setHand( List<Card> hand) {
+        this.hand = hand;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+    
+    
+}

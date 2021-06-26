@@ -7,7 +7,9 @@ import java.util.Random;
 public class Deck {
 
     private List<Card> deck;
-    private final int NUMBER_OF_CARDS = 52;
+    private final Integer NUMBER_OF_DECKS = 2;
+    private final Integer CARDS_OF_DECK = 52;
+    private final Integer NUMBER_OF_CARDS = NUMBER_OF_DECKS * CARDS_OF_DECK;
     private Random random;
 
     public Deck() {
@@ -15,7 +17,7 @@ public class Deck {
         random = new Random();
 
         for (int count = 0; count < NUMBER_OF_CARDS; count++) {
-            deck.add(new Card(Face.getFace(count % 13), Suit.getSuit(count / 13)));
+            deck.add(new Card(Face.getFace(count % 13), Suit.getSuit(count / (13 * NUMBER_OF_DECKS))));
         }
     }
 
