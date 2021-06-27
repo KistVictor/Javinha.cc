@@ -9,6 +9,7 @@ public class Player {
     
     private List<Card> hand;
     private String nome;
+    private Integer wins;
 
     public Player() {    
         this.hand = new ArrayList<>();
@@ -17,6 +18,7 @@ public class Player {
     public Player(String nome) {
         this.hand = new ArrayList<>();
         this.nome = nome;
+        this.wins = 0;
     }
 
     public void addCard(Card card) {
@@ -45,6 +47,14 @@ public class Player {
 
     public void setNome(String nome) {
         this.nome = nome;
+    }
+    
+    public void setScoreBoard() {
+        this.wins++;
+    }
+
+    public int getScoreBoard() {
+        return wins;
     }
     
     
