@@ -5,20 +5,29 @@ import java.util.List;
 
 import Maumau.Cards.Card;
 
-public class Player {
-    
+public class Player implements Comparable<Player> {
+
     private List<Card> hand;
-    private String nome;
+    private String name;
     private Integer wins;
 
-    public Player() {    
+    public Player() {
         this.hand = new ArrayList<>();
     }
 
     public Player(String nome) {
         this.hand = new ArrayList<>();
-        this.nome = nome;
+        this.name = nome;
         this.wins = 0;
+    }
+
+    public int compareTo(Player player) {
+        if (this.wins > player.wins) {
+            return -1;
+        } else if (this.wins < player.wins) {
+            return 1;
+        }
+        return this.getName().compareToIgnoreCase(player.getName());
     }
 
     public void addCard(Card card) {
@@ -37,18 +46,18 @@ public class Player {
         return hand;
     }
 
-    public void setHand( List<Card> hand) {
+    public void setHand(List<Card> hand) {
         this.hand = hand;
     }
 
-    public String getNome() {
-        return nome;
+    public String getName() {
+        return name;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
+    public void setName(String nome) {
+        this.name = nome;
     }
-    
+
     public void setScoreBoard() {
         this.wins++;
     }
@@ -56,6 +65,13 @@ public class Player {
     public int getScoreBoard() {
         return wins;
     }
-    
-    
+
+    public Integer getWins() {
+        return wins;
+    }
+
+    public void setWins(Integer wins) {
+        this.wins = wins;
+    }
+
 }

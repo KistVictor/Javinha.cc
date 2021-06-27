@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Scanner;
 
 import Maumau.Player.Player;
+import java.util.Collections;
 
 public class Game {
 
@@ -19,14 +20,12 @@ public class Game {
     private Deck deck;
     private List<Integer> wins;
     private Card lastCard;
-    private boolean finalizar = false;
+    private boolean finish = false;
     Scanner scanner = new Scanner(System.in);
 
     public Game() {
         playerList = new ArrayList<>();
         numberPlayer = 0;
-        deck = new Deck();
-        deck.shuffle();
     }
 
     public void startGame() {
@@ -40,11 +39,16 @@ public class Game {
         }
     }
 
-    public void dealCards() {
-        for (Card card : deck.getDeck()) {
-            System.out.println(card.toString());
+    public void setUp() {
+        finish = false;
+        deck = new Deck();
+        deck.shuffle();
+        for (Player player : playerList) {
+            player.setHand(new ArrayList<Card>());
         }
+    }
 
+    public void dealCards() {
         for (Integer i = 0; i < 2; i++) {
             for (Integer j = 0; j < numberPlayer; j++) {
                 playerList.get(j).addCard(deck.getDeck().get(0));
@@ -52,30 +56,28 @@ public class Game {
             }
         }
 
-        playerList.get(0).addCard(new Card(Face.ACE, Suit.DIAMOND));
-        playerList.get(0).addCard(new Card(Face.ACE, Suit.CLUB));
-        playerList.get(0).addCard(new Card(Face.ACE, Suit.SPADE));
-        playerList.get(0).addCard(new Card(Face.ACE, Suit.HEARTH));
-        /* 
-        playerList.get(1).addCard(new Card(Face.NINE, Suit.SPADE));
-        playerList.get(2).addCard(new Card(Face.NINE, Suit.HEARTH));*/
-        //    MOSTRA AS CARTAS DOS PLAYERS NO INICIO
-        //    for(Integer j = 0; j < numberPlayer; j++){
-        //        System.out.println("\n" + playerList.get(j).getNome());    
-        //        System.out.println(playerList.get(j).getHand());
-        //    }
+        playerList.get(0).addCard(new Card(Face.SEVEN, Suit.DIAMOND));
+        playerList.get(0).addCard(new Card(Face.SEVEN, Suit.CLUB));
+        playerList.get(0).addCard(new Card(Face.SEVEN, Suit.SPADE));
+        playerList.get(0).addCard(new Card(Face.SEVEN, Suit.HEARTH));
+//        playerList.get(1).addCard(new Card(Face.NINE, Suit.SPADE));
+//        playerList.get(2).addCard(new Card(Face.NINE, Suit.HEARTH));
     }
 
     public void play() {
         lastCard = deck.getDeck().get(0);
-        while (finalizar == false && deck.getDeck().size() > 0) {
+        while (finish == false && deck.getDeck().size() > 0) {
             for (Integer j = 0; j < numberPlayer; j++) {
                 if (!verifyRules(playerList.get(j).getHand(), lastCard)) {
-                    System.out.println("Jogador " + playerList.get(j).getNome() + " não possui nenhuma carta disponível, receba uma carta!");
+                    System.out.println("Jogador " + playerList.get(j).getName() + " não possui nenhuma carta disponível, receba uma carta!");
                     playerList.get(j).addCard(deck.getDeck().get(0));
                     deck.getDeck().remove(0);
                 } else {
                     j = playCard(j);
+                }
+
+                if (finish == true) {
+                    break;
                 }
             }
         }
@@ -84,13 +86,14 @@ public class Game {
     public Integer playCard(int j) {
         Integer cardIndex;
 
-        while (finalizar == false) {
-            System.out.println("\n---------------------------\nAgora é a vez do jogador " + playerList.get(j).getNome());
+        while (finish == false) {
+            System.out.println("\n---------------------------\nAgora é a vez do jogador " + playerList.get(j).getName());
             System.out.println("Última carta jogada: " + lastCard.toString());;
             System.out.println("Suas cartas: " + playerList.get(j).printCards());
             System.out.println("Menu de ajuda: [-1]\n---------------------------\n");
             System.out.println("Qual carta gostaria de jogar?");
             cardIndex = scanner.nextInt();
+            System.out.println("\n");
             if (cardIndex == -1) {
                 help();
             } else {
@@ -100,13 +103,13 @@ public class Game {
                     playerList.get(j).getHand().remove(cardPlayed);
 
                     if (playerList.get(j).getHand().isEmpty()) {
-                        System.out.println("O jogador " + playerList.get(j).getNome() + " ganhou a partida!");
+                        System.out.println("O jogador " + playerList.get(j).getName() + " ganhou a partida!");
                         playerList.get(j).setScoreBoard();
-                        finalizar = true;
+                        finish = true;
                     }
 
                     j = verifyEffect(cardPlayed, j);
-                    return j;
+                    break;
                 }
                 System.out.println("Carta inválida, por favor tente novamente!");
             }
@@ -116,6 +119,7 @@ public class Game {
     }
 
     public Integer verifyEffect(Card card, Integer j) {
+
         if (Face.ACE == card.getFace()) {
             if (j == numberPlayer - 1) {
                 j = 0;
@@ -125,6 +129,7 @@ public class Game {
         } else if (Face.JACK == card.getFace()) {
             System.out.println("Selecione o naipe desejeado: [0]Club [1]Diamond [2]Spade [3]Hearth");
             Integer suitIndex = scanner.nextInt();
+            System.out.println("\n");
             lastCard = new Card(Face.JACK, Suit.getSuit(suitIndex));
         } else if (Face.NINE == card.getFace()) {
             Integer index;
@@ -135,6 +140,17 @@ public class Game {
             }
             playerList.get(index).addCard(deck.getDeck().get(0));
             deck.getDeck().remove(0);
+        } else if (Face.SEVEN == card.getFace()) {
+            if (j == numberPlayer - 1) {
+                j = 0;
+            } else {
+                j = j + 1;
+            }
+
+            for (Integer i = 0; i < 2; i++) {
+                playerList.get(j).addCard(deck.getDeck().get(0));
+                deck.getDeck().remove(0);
+            }
         }
 
         return j;
@@ -165,8 +181,9 @@ public class Game {
     public void help() {
         int opcao = 1;
         while (opcao != 0) {
-            System.out.println("\nMenu de ajuda:\n---------------------------\n[0] - Retornar ao jogo\n[1] - Regras do Jogo\n[2] - Como jogar\n[3] - Descrição rápida\n---------------------------\nEscolha a opção desejada:");
+            System.out.println("\nMenu de ajuda:\n---------------------------\n[0] - Retornar\n[1] - Regras do Jogo\n[2] - Como jogar\n[3] - Descrição rápida\n---------------------------\nEscolha a opção desejada:");
             opcao = scanner.nextInt();
+            System.out.println("\n");
             switch (opcao) {
                 case 0:
                     break;
@@ -191,12 +208,72 @@ public class Game {
         }
     }
 
+    public void showScoreBoard() {
+        if (playerList.isEmpty()) {
+            System.out.println("Não há histórico de partidas");
+        } else {
+            Collections.sort(playerList);
+            for (Integer i = 0; i < playerList.size(); i++) {
+                System.out.println("-------------" + (i + 1) + "-------------");
+                System.out.println("Jogador: " + playerList.get(i).getName() + "\nVitórias: " + playerList.get(i).getScoreBoard() + "\n");
+            }
+        }
+    }
+
     public Integer getNumberPlayer() {
         return numberPlayer;
     }
 
     public void setNumberPlayer(Integer numberPlayer) {
         this.numberPlayer = numberPlayer;
+    }
+
+    public Integer getCardNumber() {
+        return cardNumber;
+    }
+
+    public void setCardNumber(Integer cardNumber) {
+        this.cardNumber = cardNumber;
+    }
+
+    public List<Player> getPlayerList() {
+        return playerList;
+    }
+
+    public void setPlayerList(List<Player> playerList) {
+        this.playerList = playerList;
+    }
+
+    public Deck getDeck() {
+        return deck;
+    }
+
+    public void setDeck(Deck deck) {
+        this.deck = deck;
+    }
+
+    public List<Integer> getWins() {
+        return wins;
+    }
+
+    public void setWins(List<Integer> wins) {
+        this.wins = wins;
+    }
+
+    public Card getLastCard() {
+        return lastCard;
+    }
+
+    public void setLastCard(Card lastCard) {
+        this.lastCard = lastCard;
+    }
+
+    public boolean isFinalizar() {
+        return finish;
+    }
+
+    public void setFinalizar(boolean finalizar) {
+        this.finish = finalizar;
     }
 
 }
