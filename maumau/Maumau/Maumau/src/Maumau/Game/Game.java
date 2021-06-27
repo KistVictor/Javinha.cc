@@ -16,12 +16,14 @@ public class Game {
 
     private Integer numberPlayer;
     public Integer cardNumber = 0;
+    private Integer j;
     public List<Player> playerList;
     private Deck deck;
     private List<Integer> wins;
     private Card lastCard;
     private boolean finish = false;
     Scanner scanner = new Scanner(System.in);
+    private Card cardPlayed;
 
     public Game() {
         playerList = new ArrayList<>();
@@ -50,7 +52,7 @@ public class Game {
 
     public void dealCards() {
         for (Integer i = 0; i < 2; i++) {
-            for (Integer j = 0; j < numberPlayer; j++) {
+            for (j = 0; j < numberPlayer; j++) {
                 playerList.get(j).addCard(deck.getDeck().get(0));
                 deck.getDeck().remove(0);
             }
@@ -67,7 +69,7 @@ public class Game {
     public void play() {
         lastCard = deck.getDeck().get(0);
         while (finish == false && deck.getDeck().size() > 0) {
-            for (Integer j = 0; j < numberPlayer; j++) {
+            for (j = 0; j < numberPlayer; j++) {
                 if (!verifyRules(playerList.get(j).getHand(), lastCard)) {
                     System.out.println("Jogador " + playerList.get(j).getName() + " não possui nenhuma carta disponível, receba uma carta!");
                     playerList.get(j).addCard(deck.getDeck().get(0));
@@ -88,7 +90,7 @@ public class Game {
 
         while (finish == false) {
             System.out.println("\n---------------------------\nAgora é a vez do jogador " + playerList.get(j).getName());
-            System.out.println("Última carta jogada: " + lastCard.toString());;
+            System.out.println("Última carta jogada: " + lastCard.toString());
             System.out.println("Suas cartas: " + playerList.get(j).printCards());
             System.out.println("Menu de ajuda: [-1]\n---------------------------\n");
             System.out.println("Qual carta gostaria de jogar?");
@@ -97,7 +99,7 @@ public class Game {
             if (cardIndex == -1) {
                 help();
             } else {
-                Card cardPlayed = playerList.get(j).getHand().get(cardIndex);
+                cardPlayed = playerList.get(j).getHand().get(cardIndex);
                 if (verifyRules(cardPlayed, lastCard)) {
                     lastCard = cardPlayed;
                     playerList.get(j).getHand().remove(cardPlayed);
@@ -108,48 +110,17 @@ public class Game {
                         finish = true;
                     }
 
-                    j = verifyEffect(cardPlayed, j);
+                    CardEffectRules rule = new AceEffectRule(
+                            new JackEffectRule(
+                                    new NineEffectRule(
+                                            new SevenEffectRule(
+                                                    new NoEffectRule()))));
+
+                    j = rule.validate(this);
+
                     break;
                 }
                 System.out.println("Carta inválida, por favor tente novamente!");
-            }
-        }
-
-        return j;
-    }
-
-    public Integer verifyEffect(Card card, Integer j) {
-
-        if (Face.ACE == card.getFace()) {
-            if (j == numberPlayer - 1) {
-                j = 0;
-            } else {
-                j++;
-            }
-        } else if (Face.JACK == card.getFace()) {
-            System.out.println("Selecione o naipe desejeado: [0]Club [1]Diamond [2]Spade [3]Hearth");
-            Integer suitIndex = scanner.nextInt();
-            System.out.println("\n");
-            lastCard = new Card(Face.JACK, Suit.getSuit(suitIndex));
-        } else if (Face.NINE == card.getFace()) {
-            Integer index;
-            if (j == 0) {
-                index = numberPlayer - 1;
-            } else {
-                index = j - 1;
-            }
-            playerList.get(index).addCard(deck.getDeck().get(0));
-            deck.getDeck().remove(0);
-        } else if (Face.SEVEN == card.getFace()) {
-            if (j == numberPlayer - 1) {
-                j = 0;
-            } else {
-                j = j + 1;
-            }
-
-            for (Integer i = 0; i < 2; i++) {
-                playerList.get(j).addCard(deck.getDeck().get(0));
-                deck.getDeck().remove(0);
             }
         }
 
@@ -274,6 +245,38 @@ public class Game {
 
     public void setFinalizar(boolean finalizar) {
         this.finish = finalizar;
+    }
+
+    public Integer getJ() {
+        return j;
+    }
+
+    public void setJ(Integer j) {
+        this.j = j;
+    }
+
+    public boolean isFinish() {
+        return finish;
+    }
+
+    public void setFinish(boolean finish) {
+        this.finish = finish;
+    }
+
+    public Scanner getScanner() {
+        return scanner;
+    }
+
+    public void setScanner(Scanner scanner) {
+        this.scanner = scanner;
+    }
+
+    public Card getCardPlayed() {
+        return cardPlayed;
+    }
+
+    public void setCardPlayed(Card cardPlayed) {
+        this.cardPlayed = cardPlayed;
     }
 
 }

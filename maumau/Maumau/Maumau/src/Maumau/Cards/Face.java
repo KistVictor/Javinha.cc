@@ -1,8 +1,8 @@
 package Maumau.Cards;
 
 public enum Face {
-    ACE("Ace"), TWO("Two"), THREE("Three"), FOUR("Four"), FIVE("Five"), SIX ("Six"), SEVEN ("Seven"), EIGHT ("Eight"), NINE ("Nine"),
-    TEN("Ten"), JACK("Jack"), QUEEN("Queen"), KING("King");
+    ACE("Ás"), TWO("Dois"), THREE("Três"), FOUR("Quatro"), FIVE("Cinco"), SIX ("Seis"), SEVEN ("Sete"), EIGHT ("Oito"), NINE ("Nove"),
+    TEN("Dez"), JACK("Valete"), QUEEN("Dama"), KING("Rei");
     
     String name;
 

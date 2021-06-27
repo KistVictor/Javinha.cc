@@ -1,7 +1,7 @@
 package Maumau.Cards;
 
 public enum Suit {
-    CLUB("Club"), DIAMOND("Diamond"), SPADE("Spade"), HEARTH("Hearth");
+    CLUB("Paus"), DIAMOND("Ouros"), SPADE("Espadas"), HEARTH("Copas");
     String name;
 
     Suit(String name) {
