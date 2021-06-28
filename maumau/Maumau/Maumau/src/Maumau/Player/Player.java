@@ -21,6 +21,7 @@ public class Player implements Comparable<Player> {
         this.wins = 0;
     }
 
+    // Método para ordenação da leaderboard
     public int compareTo(Player player) {
         if (this.wins > player.wins) {
             return -1;
@@ -34,6 +35,7 @@ public class Player implements Comparable<Player> {
         hand.add(card);
     }
 
+    // Retorna as cartas na mão do jogador
     public String printCards() {
         String cards = "";
         for (Integer i = 0; i < hand.size(); i++) {

@@ -12,7 +12,7 @@ public class Card {
 
     @Override
     public String toString() {
-        return face.name + " of " + suit.name;
+        return face.name + " de " + suit.name;
     }
 
     public Face getFace() {

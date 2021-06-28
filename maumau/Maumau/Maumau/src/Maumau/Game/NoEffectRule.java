@@ -8,7 +8,7 @@ public class NoEffectRule extends CardEffectRules {
 
     @Override
     public Integer validate(Game game) {
-        return game.getJ();
+        return game.getJ(); // Retorna a posição do jogador para o jogo continuar
     }
 
 }

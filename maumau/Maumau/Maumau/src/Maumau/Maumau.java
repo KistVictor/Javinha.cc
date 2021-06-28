@@ -2,11 +2,7 @@ package Maumau;
 
 import java.util.Scanner;
 
-import Maumau.Cards.Card;
-import Maumau.Cards.Deck;
 import Maumau.Game.Game;
-import Maumau.Player.Player;
-import java.util.Collections;
 
 public class Maumau {
 
@@ -15,8 +11,8 @@ public class Maumau {
         Scanner scanner = new Scanner(System.in);
 
         Game game = new Game();
-        game.startGame();
-        while (opcao != 0) {
+
+        while (opcao != 0) {    // Menu do jogo
             System.out.println("\n\n\n---------------------------\nSeja Bem-vindo ao Mau-Mau");
             System.out.println("[1] - Iniciar novo jogo");
             System.out.println("[2] - Ver ScoreBoard");
@@ -28,18 +24,18 @@ public class Maumau {
             switch (opcao) {
                 case 0:
                     System.out.println("Até mais!");
-                    game.showScoreBoard();
+                    game.showScoreBoard();  // Mostra o placar após sair do jogo
                     break;
                 case 1:
-                    game.setUp();
-                    game.dealCards();
-                    game.play();
+                    game.setUp();   // Reinicia as variáveis para inicializar um próximo jogo
+                    game.dealCards();   // Distribui as cartas para os jogadores
+                    game.play();    // Inicia o jogo
                     break;
                 case 2:
-                    game.showScoreBoard();
+                    game.showScoreBoard();  // Mostra o placar
                     break;
                 case 3:
-                    game.help();
+                    game.help(); // Mostra o menu de ajuda do game
                     break;
             }
         }

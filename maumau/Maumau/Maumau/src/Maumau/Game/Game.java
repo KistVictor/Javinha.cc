@@ -1,16 +1,13 @@
 package Maumau.Game;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Scanner;
 import Maumau.Cards.Card;
 import Maumau.Cards.Deck;
 import Maumau.Cards.Face;
-import Maumau.Cards.Suit;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
-
 import Maumau.Player.Player;
-import java.util.Collections;
 
 public class Game {
 
@@ -25,13 +22,11 @@ public class Game {
     Scanner scanner = new Scanner(System.in);
     private Card cardPlayed;
 
+    // Inicia a estrutura do jogo adicionando os jogadores que participarão
     public Game() {
         playerList = new ArrayList<>();
         numberPlayer = 0;
-    }
-
-    public void startGame() {
-        while (numberPlayer < 3) {
+        while (numberPlayer < 3) { // Não permite adicionar 
             System.out.println("Informe a quantidade de jogadores (no mínimo 3 participantes): ");
             numberPlayer = scanner.nextInt();
         }
@@ -41,6 +36,7 @@ public class Game {
         }
     }
 
+    // Prepara as variáveis para poder iniciar uma nova partida
     public void setUp() {
         finish = false;
         deck = new Deck();
@@ -50,45 +46,41 @@ public class Game {
         }
     }
 
+    // Distriui 5 cartas para cada jogador
     public void dealCards() {
-        for (Integer i = 0; i < 2; i++) {
+        for (Integer i = 0; i < 5; i++) {
             for (j = 0; j < numberPlayer; j++) {
                 playerList.get(j).addCard(deck.getDeck().get(0));
                 deck.getDeck().remove(0);
             }
         }
-
-        playerList.get(0).addCard(new Card(Face.SEVEN, Suit.DIAMOND));
-        playerList.get(0).addCard(new Card(Face.SEVEN, Suit.CLUB));
-        playerList.get(0).addCard(new Card(Face.SEVEN, Suit.SPADE));
-        playerList.get(0).addCard(new Card(Face.SEVEN, Suit.HEARTH));
-//        playerList.get(1).addCard(new Card(Face.NINE, Suit.SPADE));
-//        playerList.get(2).addCard(new Card(Face.NINE, Suit.HEARTH));
     }
 
+    // Inicia a partida
     public void play() {
-        lastCard = deck.getDeck().get(0);
-        while (finish == false && deck.getDeck().size() > 0) {
+        lastCard = deck.getDeck().get(0);   // Pega a primeira carta do baralho e coloca na mesa para o primeiro jogador poder jogar
+        while (finish == false && deck.getDeck().size() > 0) {  // O jogo termina apenas quando alguém fica sem cartas ou o baralho acaba
             for (j = 0; j < numberPlayer; j++) {
-                if (!verifyRules(playerList.get(j).getHand(), lastCard)) {
+                if (!verifyRules(playerList.get(j).getHand(), lastCard)) {  // Verifica se o jogador possui alguma carta para jogar
                     System.out.println("Jogador " + playerList.get(j).getName() + " não possui nenhuma carta disponível, receba uma carta!");
-                    playerList.get(j).addCard(deck.getDeck().get(0));
-                    deck.getDeck().remove(0);
+                    playerList.get(j).addCard(deck.getDeck().get(0));   // Adiciona mais uma carta na mão do jogador
+                    deck.getDeck().remove(0);   // Remove a carta do deck
                 } else {
                     j = playCard(j);
                 }
 
-                if (finish == true) {
+                if (finish == true) { // Termina imediatamente quando alguem ganha
                     break;
                 }
             }
         }
     }
 
+    // Inicia a rodada do jogador atual
     public Integer playCard(int j) {
         Integer cardIndex;
 
-        while (finish == false) {
+        while (true) {
             System.out.println("\n---------------------------\nAgora é a vez do jogador " + playerList.get(j).getName());
             System.out.println("Última carta jogada: " + lastCard.toString());
             System.out.println("Suas cartas: " + playerList.get(j).printCards());
@@ -96,27 +88,27 @@ public class Game {
             System.out.println("Qual carta gostaria de jogar?");
             cardIndex = scanner.nextInt();
             System.out.println("\n");
-            if (cardIndex == -1) {
+            if (cardIndex == -1) { // Abre o menu de ajuda em qualquer rodada que o jogador desejar
                 help();
             } else {
                 cardPlayed = playerList.get(j).getHand().get(cardIndex);
-                if (verifyRules(cardPlayed, lastCard)) {
+                if (verifyRules(cardPlayed, lastCard)) {    // Verifica se a carta selecionada pelo jogador pode ser descartada nesta situação
                     lastCard = cardPlayed;
-                    playerList.get(j).getHand().remove(cardPlayed);
+                    playerList.get(j).getHand().remove(cardPlayed); // Remove a carta da mão do jogador
 
-                    if (playerList.get(j).getHand().isEmpty()) {
-                        System.out.println("O jogador " + playerList.get(j).getName() + " ganhou a partida!");
-                        playerList.get(j).setScoreBoard();
-                        finish = true;
-                    }
-
-                    CardEffectRules rule = new AceEffectRule(
+                    CardEffectRules rule = new AceEffectRule(   // Verifica todos os efeitos de cartas
                             new JackEffectRule(
                                     new NineEffectRule(
                                             new SevenEffectRule(
                                                     new NoEffectRule()))));
 
                     j = rule.validate(this);
+
+                    if (playerList.get(j).getHand().isEmpty()) {    // Finaliza o game quando algum jogador ficou totalmente sem cartas
+                        System.out.println("O jogador " + playerList.get(j).getName() + " ganhou a partida!");
+                        playerList.get(j).setScoreBoard();  // Aumenta a quantidade de vitórias deste jogador
+                        finish = true;
+                    }
 
                     break;
                 }
@@ -127,7 +119,8 @@ public class Game {
         return j;
     }
 
-    public Boolean verifyRules(List<Card> hand, Card lastCard) {
+    // Verifica se será possível realizar alguma jogada com base na última carta jogada e nas cartas que estão na mão do jogador
+    public Boolean verifyRules(List<Card> hand, Card lastCard) { 
         for (Card card : hand) {
             if (lastCard.getSuit() == card.getSuit() || lastCard.getFace() == card.getFace()) {
                 return true;
@@ -139,6 +132,7 @@ public class Game {
         return false;
     }
 
+    // Verifica se o jogador selecionou a carta correta para jogar
     public Boolean verifyRules(Card card, Card lastCard) {
         if (lastCard.getSuit() == card.getSuit() || lastCard.getFace() == card.getFace()) {
             return true;
@@ -160,7 +154,7 @@ public class Game {
                     break;
                 case 1:
                     System.out.println("\nRegras:\n---------------------------\nCada jogador irá descartar UMA carta por vez. O jogo será finalizado quando um jogador jogar sua última carta.\nDeve-se jogar uma carta com o mesmo número ou naipe da carta jogada pelo ultimo jogador.");
-                    System.out.println("\nCartas Especiais:\nAce: Pula o próximo jogador\nJack: Seria a carta 'coringa', podendo ser utilizada em qualquer momento, após a jogada, pode-se escolher o naipe desejado\n9: Adiciona mais uma carta ao jogador anterior\n---------------------------\n");
+                    System.out.println("\nCartas Especiais:\nAce/Ás: Pula o próximo jogador\nJack/Valete: Seria a carta 'coringa', podendo ser utilizada em qualquer momento (exceto após o sete), após a jogada, pode-se escolher o naipe desejado\n9: Adiciona mais uma carta ao jogador anterior\n7: Adiciona duas cartas ao próximo jogador\n---------------------------\n");
                     System.out.println("Pressione [1] para continuar!");
                     scanner.nextInt();
                     break;
@@ -180,14 +174,10 @@ public class Game {
     }
 
     public void showScoreBoard() {
-        if (playerList.isEmpty()) {
-            System.out.println("Não há histórico de partidas");
-        } else {
-            Collections.sort(playerList);
-            for (Integer i = 0; i < playerList.size(); i++) {
-                System.out.println("-------------" + (i + 1) + "-------------");
-                System.out.println("Jogador: " + playerList.get(i).getName() + "\nVitórias: " + playerList.get(i).getScoreBoard() + "\n");
-            }
+        Collections.sort(playerList);   // Realiza uma nova ordenação nos players de acordo com a quantidade de vitórias e/ou alfabeticamente
+        for (Integer i = 0; i < playerList.size(); i++) {
+            System.out.println("-------------" + (i + 1) + "-------------");
+            System.out.println("Jogador: " + playerList.get(i).getName() + "\nVitórias: " + playerList.get(i).getScoreBoard() + "\n");
         }
     }
 

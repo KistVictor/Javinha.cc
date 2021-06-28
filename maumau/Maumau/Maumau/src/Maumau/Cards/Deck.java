@@ -7,12 +7,13 @@ import java.util.Random;
 public class Deck {
 
     private List<Card> deck;
-    private final Integer NUMBER_OF_DECKS = 2;
-    private final Integer CARDS_OF_DECK = 52;
+    private final Integer NUMBER_OF_DECKS = 2;  //Seguimos o padrão das regras, 
+    private final Integer CARDS_OF_DECK = 52;   //sendo necessário 2 baralhos de 52 cartas para o jogo.
     private final Integer NUMBER_OF_CARDS = NUMBER_OF_DECKS * CARDS_OF_DECK;
     private Random random;
 
-    public Deck() {
+    // Faz a criação do baralho com base nos parâmetros acima
+    public Deck() { //Inicializa o deck
         deck = new ArrayList<>();
         random = new Random();
 
@@ -21,6 +22,7 @@ public class Deck {
         }
     }
 
+    // Embaralha as cartas
     public void shuffle() {
         for (int first = 0; first < NUMBER_OF_CARDS; first++) {
             int second = random.nextInt(NUMBER_OF_CARDS);
